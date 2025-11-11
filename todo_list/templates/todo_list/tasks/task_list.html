@@ -1,0 +1,14 @@
+{% extends 'todo_list/base.html' %}
+{% block title %}Task List{% endblock %}
+
+{% block content %}
+    <h1>Task List</h1>
+        {% for task in tasks %}
+                <a href= "{% url 'todo:task_detail' task.id %}"> {{task.title}}</a>
+        {% empty %}
+            <h1>No tasks available.</h1>
+        <p> Published: {{ task.published }}</p>
+        {% endfor %}
+        <div id='footer'>
+            <p>Todo List with: {{tasks.count}} task/s</p>
+{% endblock %}

@@ -4,7 +4,7 @@ from django.db import models
 class Task(models.Model):
     class Status(models.TextChoices):
             COMPLETED = 'C', 'Completed'
-            PENDING = 'P', 'Pending'
+            PENDING = 'P', 'In process'
             
     title = models.CharField(max_length = 200)
     body = models.TextField(null = True, blank = True)
@@ -15,6 +15,8 @@ class Task(models.Model):
         default = Status.PENDING
     )
     changed = models.DateTimeField(auto_now = True)
-    
+    class Meta:
+        ordering = ['-published']
+        
     def __str__(self):
         return self.title

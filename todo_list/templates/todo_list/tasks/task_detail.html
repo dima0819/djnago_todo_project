@@ -1,0 +1,14 @@
+{% extends 'todo_list/base.html'%}
+{% block title %}Task Detail{% endblock %}
+
+{% block content %}
+        <h1>{{ task.title }}</h1>
+        <p>Status: {{task.get_status_display}}</p>
+        <p>Published: {{ task.published }}</p>
+        <p>Last Changed: {{ task.changed }}</p>
+        <div>
+            <h2>Description:</h2>
+            <p>{{ task.body }}</p>
+        </div>
+    <a href="{% url 'todo:task_list' %}">Back to Task List</a>
+{% endblock %}
