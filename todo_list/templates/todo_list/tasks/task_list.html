@@ -2,13 +2,46 @@
 {% block title %}Task List{% endblock %}
 
 {% block content %}
-    <h1>Task List</h1>
-        {% for task in tasks %}
-                <a href= "{% url 'todo:task_detail' task.id %}"> {{task.title}}</a>
-        {% empty %}
-            <h1>No tasks available.</h1>
-        <p> Published: {{ task.published }}</p>
-        {% endfor %}
-        <div id='footer'>
-            <p>Todo List with: {{tasks.count}} task/s</p>
+    <div class="header">
+        <div>
+            <h1>Task List</h1>
+            <div class="sub">You have <strong>{{ tasks.count }}</strong> task{% if tasks.count|pluralize %}s{% endif %}.</div>
+        </div>
+    </div>
+
+    {% if tasks.exists %}
+        <div class="tasks">
+            {% for task in tasks %}
+                <div class="card task {% if task.status == 'C' %}done{% endif %}">
+                    <div class="left">
+                        <div>
+                              <a class="title" href="{% url 'todo_list:task_detail' task.id %}">{{ task.title }}</a>
+                            {% if task.body %}
+                                <div class="meta">{{ task.body|truncatechars:120 }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <div class="right align-right">
+                        <div class="meta">Published: {{ task.published|date:"SHORT_DATETIME_FORMAT" }}</div>
+                        {% if task.status == 'C' %}
+                            <span class="badge text-muted">Done</span>
+                        {% else %}
+                            <span class="badge">In progress</span>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="card">
+            <h3 class="text-muted">No tasks available.</h3>
+            <a class="btn" href="{% url 'todo:task_create' %}">Create your first task</a>
+        </div>
+    {% endif %}
+
+    <div class="footer">
+        <p>Todo List · {{ tasks.count }} task{% if tasks.count|pluralize %}s{% endif %}</p>
+    </div>
+
 {% endblock %}
