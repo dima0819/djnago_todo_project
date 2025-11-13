@@ -7,6 +7,8 @@
             <h1>Task List</h1>
             <div class="sub">You have <strong>{{ tasks.count }}</strong> task{% if tasks.count|pluralize %}s{% endif %}.</div>
         </div>
+        <div>
+            <a href="{% url 'todo:task_create' %}" class="btn">Create New Task</a>
     </div>
 
     {% if tasks.exists %}
@@ -25,7 +27,7 @@
                     <div class="right align-right">
                         <div class="meta">Published: {{ task.published|date:"SHORT_DATETIME_FORMAT" }}</div>
                         {% if task.status == 'C' %}
-                            <span class="badge text-muted">Done</span>
+                            <span class="badge text-muted">Completed</span>
                         {% else %}
                             <span class="badge">In progress</span>
                         {% endif %}
