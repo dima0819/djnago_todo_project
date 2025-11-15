@@ -11,5 +11,6 @@
             <p>{{ task.body }}</p>
         </div>
         <a href="{% url 'todo:task_update' task.id %}">Edit Task</a> |
+        <a href="{% url 'todo:task_delete' task.id %}">Delete</a> |
     <a href="{% url 'todo:task_list' %}">Back to Task List</a>
 {% endblock %}
